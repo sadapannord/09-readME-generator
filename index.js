@@ -2,7 +2,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 // TODO: Create an array of questions for user input
-const questions = [];//given code
+const generateMarkdown=require('./generateMarkdown.js')
 inquirer
   .prompt([
     {
@@ -13,56 +13,46 @@ inquirer
     {
       type: 'input',
       message: 'Please describe your project.',
-      name: 'description',
+      name: 'Description',
     },
     {
       type:'input',
       message: "Please input your Table of Contents.",
-      name: 'contents',
+      name: 'Contents',
     },
     {
       type:"input",
       message: "Please describe installation instructions.",
-      name:"installation",
+      name:"Installation",
     },
     {
       type:"input",
       message: "Please describe the usage of your project.",
-      name: "usage",
+      name: "Usage",
     },
     {
       type: 'list',
       message: 'Which license would you like to use?',
-      name: 'license',
+      name: 'License',
       choices: ["MIT","Apache","Other"],
     },
     {
       type: "input",
       message: "Please describe contribution guidelines.",
-      name: "contributing"
+      name: "Contributing"
     },
     {
       type:"input",
       message: "Please input your test instructions.",
-      name:"testing"
+      name:"Testing"
     }
     ])
     .then((data) => {
-      console.log(data)
-      const genReadME = `${data.title.toLowerCase().split(' ').join('')}.json`;
+      const genReadME = generateMarkdown(data)
+      // `${data.Title.toLowerCase().split(' ').join('')}.json`;
   
-      fs.writeFile(genReadME, JSON.stringify(data, null, '\t'), (err) =>
+      fs.writeFile("./output/README.md", (genReadME), (err) =>
         err ? console.log(err) : console.log('Success!')
       );
     });
 
-
-  ;
-// TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
-
-// TODO: Create a function to initialize app
-function init() {}
-
-// Function call to initialize app
-init();
